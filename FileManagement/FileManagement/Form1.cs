@@ -355,8 +355,6 @@ namespace FileManagement
                             this.lb_connect.ForeColor = Color.FromArgb(255, 0, 0);
                             socketATM.Close();
                             tcpClient.Close();
-
-
                         }
 
                     }

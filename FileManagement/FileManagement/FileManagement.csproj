@@ -69,6 +69,7 @@
       <DependentUpon>copyFile.cs</DependentUpon>
     </Compile>
     <Compile Include="Machine.cs" />
+    <Compile Include="ModelParameter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchMachineID.cs">
