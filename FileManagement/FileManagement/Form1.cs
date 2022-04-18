@@ -93,6 +93,10 @@ namespace FileManagement
         }
         private void bt_search_Click(object sender, EventArgs e)
         {
+            string[] subdirs = Directory.GetDirectories(txt_folder.Text)
+                            .Select(Path.GetFileName)
+                            .ToArray();
+
             string[] folders= Directory.GetDirectories(txt_folder.Text, "*",SearchOption.AllDirectories);
 
           

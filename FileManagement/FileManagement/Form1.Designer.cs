@@ -45,6 +45,7 @@ namespace FileManagement
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.chk = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.btn_copy = new System.Windows.Forms.Button();
+            this.date_start = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,7 +79,7 @@ namespace FileManagement
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(177, 97);
+            this.progressBar1.Location = new System.Drawing.Point(167, 142);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(414, 23);
             this.progressBar1.TabIndex = 5;
@@ -92,7 +93,7 @@ namespace FileManagement
             // lblPercent
             // 
             this.lblPercent.AutoSize = true;
-            this.lblPercent.Location = new System.Drawing.Point(620, 107);
+            this.lblPercent.Location = new System.Drawing.Point(623, 152);
             this.lblPercent.Name = "lblPercent";
             this.lblPercent.Size = new System.Drawing.Size(21, 13);
             this.lblPercent.TabIndex = 6;
@@ -101,7 +102,7 @@ namespace FileManagement
             // lblProgress
             // 
             this.lblProgress.AutoSize = true;
-            this.lblProgress.Location = new System.Drawing.Point(174, 81);
+            this.lblProgress.Location = new System.Drawing.Point(164, 116);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(35, 13);
             this.lblProgress.TabIndex = 7;
@@ -116,7 +117,7 @@ namespace FileManagement
             // lb_result
             // 
             this.lb_result.AutoSize = true;
-            this.lb_result.Location = new System.Drawing.Point(24, 97);
+            this.lb_result.Location = new System.Drawing.Point(24, 142);
             this.lb_result.Name = "lb_result";
             this.lb_result.Size = new System.Drawing.Size(44, 13);
             this.lb_result.TabIndex = 9;
@@ -177,11 +178,22 @@ namespace FileManagement
             this.btn_copy.UseVisualStyleBackColor = true;
             this.btn_copy.Click += new System.EventHandler(this.btn_copy_Click);
             // 
+            // date_start
+            // 
+            this.date_start.CustomFormat = "dd/MM/yyyy";
+            this.date_start.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
+            this.date_start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.date_start.Location = new System.Drawing.Point(177, 83);
+            this.date_start.Name = "date_start";
+            this.date_start.Size = new System.Drawing.Size(200, 20);
+            this.date_start.TabIndex = 15;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(938, 496);
+            this.Controls.Add(this.date_start);
             this.Controls.Add(this.btn_copy);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label2);
@@ -220,6 +232,7 @@ namespace FileManagement
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn chk;
         private System.Windows.Forms.Button btn_copy;
+        private System.Windows.Forms.DateTimePicker date_start;
     }
 }
 
