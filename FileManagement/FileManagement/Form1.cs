@@ -11,12 +11,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Net;
+using System.Net.Sockets;
 
 namespace FileManagement
 {
     public partial class Form1 : Form
     {
-        public static string[] LIST_FILE = ConfigurationManager.AppSettings["listfile"].Split(new char[] { ',' });
+        private static string[] MACHINE_ID = ConfigurationManager.AppSettings["Machine_ID"].Split(new char[] { ',' });
+        //  public static string[] LIST_FILE = ConfigurationManager.AppSettings["listfile"].Split(new char[] { ',' });
+        public static int IP_ATM = Int32.Parse(ConfigurationManager.AppSettings["port_atm"]);
+
+        public static List<Machine> listMachine;
+        public Socket socketATM;
+        TcpClient tcpClient;
         DataTable table;
         public Form1()
         {
@@ -35,14 +43,36 @@ namespace FileManagement
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+
             table = new DataTable();
             table.Columns.Add("Tên File", typeof(string));
             table.Columns.Add("Thư mục", typeof(string));
             table.Columns.Add("Kích thức", typeof(string));
+            listMachine = new List<Machine>();
+            foreach (string item in MACHINE_ID)
+            {
+                Machine machine = new Machine();
+                if (item.IndexOf(":") > 0)
+                {
+                    comboBox1.Items.Add(item.Split(new char[] { ':' })[0]);
+                    machine.IDMachine = item.Split(new char[] { ':' })[0];
+                    machine.ip = item.Split(new char[] { ':' })[1];
+
+
+                    listMachine.Add(machine);
+
+                }
+
+
+            }
 
 
 
 
+
+
+            this.dataGridView1.Controls.Add(HeaderCheckBox);
 
             dataGridView1.DataSource = table;
             this.dataGridView1.Columns[1].Width = 400;
@@ -53,11 +83,23 @@ namespace FileManagement
             HeaderCheckBox.MouseClick += new MouseEventHandler(HeaderCheckBox_MouseClick);
             // chkls_item_file.Items.AddRange(LIST_FILE);
         }
+        public static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("No network adapters with an IPv4 address in the system!");
+        }
 
         private void bt_open_folder_Click(object sender, EventArgs e)
         {
-           
-
+            Console.WriteLine(listMachine.ToString());
+            //  Console.WriteLine(MACHINE_ID);
             listFullPart = new List<string>();
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
             dialog.IsFolderPicker = true;
@@ -97,32 +139,32 @@ namespace FileManagement
                             .Select(Path.GetFileName)
                             .ToArray();
 
-            string[] folders= Directory.GetDirectories(txt_folder.Text, "*",SearchOption.AllDirectories);
+            string[] folders = Directory.GetDirectories(txt_folder.Text, "*", SearchOption.AllDirectories);
 
-          
+
             Console.WriteLine(folders);
-   
 
 
-            if (Utils.PathLocation(txt_folder.Text,"Đường dẫn thư mục không đúng"))
-             {
-                 if (backgroundWorker1.IsBusy)
-                 {
-                     backgroundWorker1.CancelAsync();
-                 }
-                 else
-                 {
-                     progressBar1.Value = progressBar1.Minimum;
-                     bt_search.Text = "Dừng tìm";
-                     //   listView1.Items.Clear();
 
-                     //  Console.WriteLine(table.Rows.Count);
-                     table.Clear();
+            if (Utils.PathLocation(txt_folder.Text, "Đường dẫn thư mục không đúng"))
+            {
+                if (backgroundWorker1.IsBusy)
+                {
+                    backgroundWorker1.CancelAsync();
+                }
+                else
+                {
+                    progressBar1.Value = progressBar1.Minimum;
+                    bt_search.Text = "Dừng tìm";
+                    //   listView1.Items.Clear();
 
-                     // dataGridView1.Refresh();
-                     backgroundWorker1.RunWorkerAsync();
-                 }
-             }
+                    //  Console.WriteLine(table.Rows.Count);
+                    table.Clear();
+
+                    // dataGridView1.Refresh();
+                    backgroundWorker1.RunWorkerAsync();
+                }
+            }
 
         }
 
@@ -159,7 +201,7 @@ namespace FileManagement
         {
             try
             {
-              
+
                 foreach (var file in Directory.GetFiles(directory))
                 {
                     if (backgroundWorker1.CancellationPending)
@@ -218,13 +260,13 @@ namespace FileManagement
 
             lb_result.Text = String.Format("Tìm thấy {0} tập tin.", table.Rows.Count);
             lblProgress.Text = "";
-           
+
             if (progressBar1.Value < progressBar1.Maximum)
             {
                 lblProgress.Text = "Dừng tìm kiếm. " + lblProgress.Text;
             }
             bt_search.Text = "Tìm kiếm";
-        }   
+        }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -273,12 +315,81 @@ namespace FileManagement
             }
             dataGridView1.RefreshEdit();
         }
-  
+
 
         private void btn_copy_Click(object sender, EventArgs e)
         {
             copyFile f = new copyFile(this);
             f.Show();
+
+        }
+
+        private void btn_machine_IP_Click(object sender, EventArgs e)
+        {
+           
+
+            try
+            {
+
+                if (comboBox1.SelectedItem != null)
+                {
+                    if (btn_machine_IP.Text == "Connect ID Máy ")
+                    {
+                        btn_machine_IP.Enabled = false;
+                        comboBox1.Enabled = false;
+                        btn_machine_IP.Text = "Close ID Máy ";
+                        this.lb_connect.Text = "Connect to " + comboBox1.SelectedItem.ToString();
+                        Machine result = listMachine.Find(x => x.IDMachine == comboBox1.SelectedItem.ToString());
+                        TcpClient newTcpClient = new TcpClient(result.ip, IP_ATM);
+                        socketATM = newTcpClient.Client;
+                        if (socketATM.Connected)
+                        {
+                            btn_machine_IP.Enabled = true;
+                            this.lb_connect.Text = "Connect to " + result.IDMachine + " success";
+                            this.lb_connect.ForeColor = Color.FromArgb(124, 252, 0);
+                        }
+                        else
+                        {
+                            btn_machine_IP.Enabled = true;
+                            this.lb_connect.Text = "Connect to " + result.IDMachine + "failed";
+                            this.lb_connect.ForeColor = Color.FromArgb(255, 0, 0);
+                            socketATM.Close();
+                            tcpClient.Close();
+
+
+                        }
+
+                    }
+                    else
+                    {
+                        btn_machine_IP.Enabled = true;
+                        comboBox1.Enabled = true;
+                        btn_machine_IP.Text = "Connect ID Máy ";
+                        this.lb_connect.Text = "";
+                        if (socketATM != null)
+                            socketATM.Close();
+                        if (tcpClient != null)
+                            tcpClient.Close();
+                    }
+
+                }
+
+                else
+                {
+                    MessageBox.Show("Bạn chưa nhập ID máy");
+                }
+            }
+            catch (Exception ex)
+            {
+                btn_machine_IP.Enabled = true;
+                this.lb_connect.Text = "Connect to " + comboBox1.SelectedItem.ToString() + " failed";
+                this.lb_connect.ForeColor = Color.FromArgb(255, 0, 0);
+            }
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }

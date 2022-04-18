@@ -38,3 +38,4 @@ E:\ASP\Search-file-image\FileManagement\FileManagement\obj\Debug\FileManagement.
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\Debug\FileManagement.csproj.CoreCompileInputs.cache
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\Debug\FileManagement.exe
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\Debug\FileManagement.pdb
+E:\ASP\Search-file-image\FileManagement\FileManagement\obj\Debug\FileManagement.SearchMachineID.resources
