@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FileManagement
 {
-    public class Machine
+    public class ModelMachine
     {
         public string IDMachine { get; set; }
         public string ip { get; set; }

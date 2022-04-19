@@ -39,3 +39,5 @@ E:\ASP\Search-file-image\FileManagement\FileManagement\obj\Debug\FileManagement.
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\Debug\FileManagement.exe
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\Debug\FileManagement.pdb
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\Debug\FileManagement.SearchMachineID.resources
+E:\ASP\Search-file-image\FileManagement\FileManagement\bin\Debug\Nancy.dll
+E:\ASP\Search-file-image\FileManagement\FileManagement\bin\Debug\Nancy.xml

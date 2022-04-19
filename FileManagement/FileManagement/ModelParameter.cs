@@ -8,7 +8,7 @@ namespace FileManagement
 {
     public class ModelParameter
     {
-        public string Status { get; set; }
+     
         public string TransNo { get; set; }
         public string CardNumber { get; set; }
         public string TransactionDate { get; set; }

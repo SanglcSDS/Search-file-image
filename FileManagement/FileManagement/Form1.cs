@@ -13,16 +13,20 @@ using System.Diagnostics;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Net;
 using System.Net.Sockets;
+using Nancy.Json;
+using Newtonsoft.Json;
+using System.Globalization;
+using Newtonsoft.Json.Linq;
 
 namespace FileManagement
 {
     public partial class Form1 : Form
     {
         private static string[] MACHINE_ID = ConfigurationManager.AppSettings["Machine_ID"].Split(new char[] { ',' });
-        //  public static string[] LIST_FILE = ConfigurationManager.AppSettings["listfile"].Split(new char[] { ',' });
         public static int IP_ATM = Int32.Parse(ConfigurationManager.AppSettings["port_atm"]);
+        public static int CHECK_CONNECTION_TIMEOUT = Int32.Parse(ConfigurationManager.AppSettings["check_connection_timeout"]);
 
-        public static List<Machine> listMachine;
+        public static List<ModelMachine> listMachine;
         public Socket socketATM;
         TcpClient tcpClient;
         DataTable table;
@@ -49,29 +53,20 @@ namespace FileManagement
             table.Columns.Add("Tên File", typeof(string));
             table.Columns.Add("Thư mục", typeof(string));
             table.Columns.Add("Kích thức", typeof(string));
-            listMachine = new List<Machine>();
+            listMachine = new List<ModelMachine>();
             foreach (string item in MACHINE_ID)
             {
-                Machine machine = new Machine();
+                ModelMachine machine = new ModelMachine();
                 if (item.IndexOf(":") > 0)
                 {
                     comboBox1.Items.Add(item.Split(new char[] { ':' })[0]);
                     machine.IDMachine = item.Split(new char[] { ':' })[0];
                     machine.ip = item.Split(new char[] { ':' })[1];
-
-
                     listMachine.Add(machine);
-
                 }
 
 
             }
-
-
-
-
-
-
             this.dataGridView1.Controls.Add(HeaderCheckBox);
 
             dataGridView1.DataSource = table;
@@ -83,18 +78,7 @@ namespace FileManagement
             HeaderCheckBox.MouseClick += new MouseEventHandler(HeaderCheckBox_MouseClick);
             // chkls_item_file.Items.AddRange(LIST_FILE);
         }
-        public static string GetLocalIPAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip.ToString();
-                }
-            }
-            throw new Exception("No network adapters with an IPv4 address in the system!");
-        }
+
 
         private void bt_open_folder_Click(object sender, EventArgs e)
         {
@@ -133,41 +117,87 @@ namespace FileManagement
         {
             HeaderCheckBoxClick((CheckBox)sender);
         }
+
+        public static List<string> listUrl;
         private void bt_search_Click(object sender, EventArgs e)
         {
-            string[] subdirs = Directory.GetDirectories(txt_folder.Text)
-                            .Select(Path.GetFileName)
-                            .ToArray();
+            Console.WriteLine(date_TransactionDate.Text);
 
-            string[] folders = Directory.GetDirectories(txt_folder.Text, "*", SearchOption.AllDirectories);
-
-
-            Console.WriteLine(folders);
-
-
-
-            if (Utils.PathLocation(txt_folder.Text, "Đường dẫn thư mục không đúng"))
+            ModelMessage parameter = new ModelMessage
             {
-                if (backgroundWorker1.IsBusy)
+                Status = "Search",
+                Messege = "",
+                Url = null,
+                modelInfoImage = null,
+                modelParameter = new ModelParameter
                 {
-                    backgroundWorker1.CancelAsync();
+                    CardNumber = txt_CardNumber.Text,
+                    TransNo = txt_TransNo.Text,
+                    TransactionDate = DateTime.ParseExact(date_TransactionDate.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("yyyyMMdd"),
                 }
-                else
+            };
+            string jsonparameter = new JavaScriptSerializer().Serialize(parameter);
+            if (socketATM != null)
+            {
+                if (this.IsConnected())
                 {
-                    progressBar1.Value = progressBar1.Minimum;
-                    bt_search.Text = "Dừng tìm";
-                    //   listView1.Items.Clear();
+                    Byte[] data = Encoding.ASCII.GetBytes(jsonparameter);
+                    socketATM.Send(data);
+                }
+                while (true)
+                {
+                    if (this.IsConnected())
+                    {
+                        Byte[] data = Utils.ReceiveAll(socketATM);
+                        if (data.Length > 0)
+                        {
+                            string dataSearch = Encoding.ASCII.GetString(data);
 
-                    //  Console.WriteLine(table.Rows.Count);
-                    table.Clear();
+                            ModelMessage modelMessage = JsonConvert.DeserializeObject<ModelMessage>(dataSearch);
+                            if (modelMessage.Status.Equals("END"))
+                            {
+                                MessageBox.Show(modelMessage.Messege);
+                                return;
+                            }
+                            else if (modelMessage.Status.Equals("DATA"))
+                            {
+                                Console.WriteLine(modelMessage.modelInfoImage);
+                            }
 
-                    // dataGridView1.Refresh();
-                    backgroundWorker1.RunWorkerAsync();
+
+                            /*else if(modelMessage.Status.Equals("DATA")) {
+                                Console.WriteLine(modelMessage.modelInfoImage.Name);
+                            
+                            }*/
+
+                        }
+
+
+                    }
+
                 }
             }
+            else
+            {
+                MessageBox.Show("Connec ID máy không thành công ");
+            }
+
+
 
         }
-
+        public bool ValidateJSON(string s)
+        {
+            try
+            {
+                JToken.Parse(s);
+                return true;
+            }
+            catch (JsonReaderException ex)
+            {
+                Trace.WriteLine(ex);
+                return false;
+            }
+        }
         private void txt_folder_TextChanged(object sender, EventArgs e)
         {
 
@@ -326,8 +356,6 @@ namespace FileManagement
 
         private void btn_machine_IP_Click(object sender, EventArgs e)
         {
-           
-
             try
             {
 
@@ -339,7 +367,7 @@ namespace FileManagement
                         comboBox1.Enabled = false;
                         btn_machine_IP.Text = "Close ID Máy ";
                         this.lb_connect.Text = "Connect to " + comboBox1.SelectedItem.ToString();
-                        Machine result = listMachine.Find(x => x.IDMachine == comboBox1.SelectedItem.ToString());
+                        ModelMachine result = listMachine.Find(x => x.IDMachine == comboBox1.SelectedItem.ToString());
                         TcpClient newTcpClient = new TcpClient(result.ip, IP_ATM);
                         socketATM = newTcpClient.Client;
                         if (socketATM.Connected)
@@ -386,6 +414,26 @@ namespace FileManagement
 
         }
 
+        public bool IsConnected()
+        {
+            try
+            {
+                bool check = !(socketATM.Poll(CHECK_CONNECTION_TIMEOUT, SelectMode.SelectRead) && socketATM.Available == 0);
+                //if (!check)
+                //    Logger.Log("Host not responding");
+                return check;
+            }
+            catch (SocketException)
+            {
+                //Logger.Log("Host not responding");
+                return false;
+            }
+            catch (ObjectDisposedException)
+            {
+                //Logger.Log("Host not responding");
+                return false;
+            }
+        }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 

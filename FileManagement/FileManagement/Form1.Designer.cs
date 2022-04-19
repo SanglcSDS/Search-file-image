@@ -45,14 +45,14 @@ namespace FileManagement
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.chk = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.btn_copy = new System.Windows.Forms.Button();
-            this.date_start = new System.Windows.Forms.DateTimePicker();
+            this.date_TransactionDate = new System.Windows.Forms.DateTimePicker();
             this.btn_machine_IP = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txt_CardNumber = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txt_TransNo = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.lb_connect = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -187,15 +187,15 @@ namespace FileManagement
             this.btn_copy.UseVisualStyleBackColor = true;
             this.btn_copy.Click += new System.EventHandler(this.btn_copy_Click);
             // 
-            // date_start
+            // date_TransactionDate
             // 
-            this.date_start.CustomFormat = "dd/MM/yyyy";
-            this.date_start.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
-            this.date_start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.date_start.Location = new System.Drawing.Point(696, 43);
-            this.date_start.Name = "date_start";
-            this.date_start.Size = new System.Drawing.Size(186, 20);
-            this.date_start.TabIndex = 15;
+            this.date_TransactionDate.CustomFormat = "dd/MM/yyyy";
+            this.date_TransactionDate.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
+            this.date_TransactionDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.date_TransactionDate.Location = new System.Drawing.Point(696, 43);
+            this.date_TransactionDate.Name = "date_TransactionDate";
+            this.date_TransactionDate.Size = new System.Drawing.Size(186, 20);
+            this.date_TransactionDate.TabIndex = 15;
             // 
             // btn_machine_IP
             // 
@@ -236,12 +236,12 @@ namespace FileManagement
             this.label4.TabIndex = 19;
             this.label4.Text = "Số Thẻ";
             // 
-            // textBox1
+            // txt_CardNumber
             // 
-            this.textBox1.Location = new System.Drawing.Point(177, 43);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(173, 20);
-            this.textBox1.TabIndex = 20;
+            this.txt_CardNumber.Location = new System.Drawing.Point(177, 43);
+            this.txt_CardNumber.Name = "txt_CardNumber";
+            this.txt_CardNumber.Size = new System.Drawing.Size(173, 20);
+            this.txt_CardNumber.TabIndex = 20;
             // 
             // label5
             // 
@@ -252,12 +252,12 @@ namespace FileManagement
             this.label5.TabIndex = 21;
             this.label5.Text = "Trans No";
             // 
-            // textBox2
+            // txt_TransNo
             // 
-            this.textBox2.Location = new System.Drawing.Point(428, 43);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(173, 20);
-            this.textBox2.TabIndex = 22;
+            this.txt_TransNo.Location = new System.Drawing.Point(428, 43);
+            this.txt_TransNo.Name = "txt_TransNo";
+            this.txt_TransNo.Size = new System.Drawing.Size(173, 20);
+            this.txt_TransNo.TabIndex = 22;
             // 
             // label6
             // 
@@ -284,14 +284,14 @@ namespace FileManagement
             this.ClientSize = new System.Drawing.Size(938, 496);
             this.Controls.Add(this.lb_connect);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txt_TransNo);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txt_CardNumber);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.btn_machine_IP);
-            this.Controls.Add(this.date_start);
+            this.Controls.Add(this.date_TransactionDate);
             this.Controls.Add(this.btn_copy);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label2);
@@ -330,14 +330,14 @@ namespace FileManagement
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn chk;
         private System.Windows.Forms.Button btn_copy;
-        private System.Windows.Forms.DateTimePicker date_start;
+        private System.Windows.Forms.DateTimePicker date_TransactionDate;
         private System.Windows.Forms.Button btn_machine_IP;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txt_CardNumber;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txt_TransNo;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lb_connect;
     }
