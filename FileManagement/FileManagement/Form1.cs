@@ -25,11 +25,13 @@ namespace FileManagement
         private static string[] MACHINE_ID = ConfigurationManager.AppSettings["Machine_ID"].Split(new char[] { ',' });
         public static int IP_ATM = Int32.Parse(ConfigurationManager.AppSettings["port_atm"]);
         public static int CHECK_CONNECTION_TIMEOUT = Int32.Parse(ConfigurationManager.AppSettings["check_connection_timeout"]);
-
         public static List<ModelMachine> listMachine;
         public Socket socketATM;
+        public static List<ModelInfoImage> modelInfoImages;
         TcpClient tcpClient;
         DataTable table;
+
+
         public Form1()
         {
 
@@ -47,8 +49,6 @@ namespace FileManagement
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-
             table = new DataTable();
             table.Columns.Add("Tên File", typeof(string));
             table.Columns.Add("Thư mục", typeof(string));
@@ -80,18 +80,6 @@ namespace FileManagement
         }
 
 
-        private void bt_open_folder_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine(listMachine.ToString());
-            //  Console.WriteLine(MACHINE_ID);
-            listFullPart = new List<string>();
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.IsFolderPicker = true;
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                txt_folder.Text = dialog.FileName;
-            }
-        }
 
         CheckBox HeaderCheckBox = null;
         bool IsHeaderCheckBoxClicked = false;
@@ -161,7 +149,10 @@ namespace FileManagement
                             }
                             else if (modelMessage.Status.Equals("DATA"))
                             {
-                                Console.WriteLine(modelMessage.modelInfoImage);
+                                modelInfoImages = new List<ModelInfoImage>();
+                                modelInfoImages.AddRange(modelMessage.modelInfoImage);
+                                backgroundWorker1.RunWorkerAsync();
+                                return;
                             }
 
 
@@ -185,34 +176,10 @@ namespace FileManagement
 
 
         }
-        public bool ValidateJSON(string s)
-        {
-            try
-            {
-                JToken.Parse(s);
-                return true;
-            }
-            catch (JsonReaderException ex)
-            {
-                Trace.WriteLine(ex);
-                return false;
-            }
-        }
-        private void txt_folder_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void chkls_item_file_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-
-
-        }
 
         public static List<string> listFullPart;
 
-        public void AddToListView(string file)
+ /*       public void AddToListView(string file)
         {
             FileInfo finfo = new FileInfo(file);
             dataGridView1.Invoke((Action)(() =>
@@ -225,54 +192,20 @@ namespace FileManagement
                 table.Rows.Add(finfo.Name, finfo.DirectoryName, Math.Ceiling(finfo.Length / 1024f).ToString("0 KB"));
             }));
 
-        }
-
-        public void ScanDirectory(string directory, string searchPattern)
-        {
-            try
-            {
-
-                foreach (var file in Directory.GetFiles(directory))
-                {
-                    if (backgroundWorker1.CancellationPending)
-                    {
-                        return;
-                    }
-
-                    lblProgress.Invoke((Action)(() => lblProgress.Text = file));
-                    if (file.Contains(searchPattern) && file.Contains(txt_content.Text))
-                    {
-                        listFullPart.Add(file);
-                        AddToListView(file);
-                    }
-                }
-
-
-                foreach (var dir in Directory.GetDirectories(directory))
-                {
-                    ScanDirectory(dir, searchPattern);
-                }
-            }
-            catch
-            {
-            }
-        }
+        }*/
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-
-            string[] dirs = Directory.GetDirectories(txt_folder.Text);
-            float length = dirs.Length;
-            progressBar1.Invoke((Action)(() => progressBar1.Maximum = dirs.Length));
-            ScanDirectory(txt_folder.Text, ".jpg");
-            for (int i = 0; i < dirs.Length; i++)
+            progressBar1.Invoke((Action)(() => progressBar1.Maximum = modelInfoImages.Count));
+            for (int i = 0; i < modelInfoImages.Count; i++)
             {
-                backgroundWorker1.ReportProgress((int)(i / length * 100));
-                ScanDirectory(dirs[i], ".jpg");
+                backgroundWorker1.ReportProgress((int)(i / modelInfoImages.Count * 100));
+
+                table.Rows.Add(modelInfoImages[i].Name, modelInfoImages[i].Url, modelInfoImages[i].size);
+
             }
 
             backgroundWorker1.ReportProgress(100);
-
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -298,26 +231,9 @@ namespace FileManagement
             bt_search.Text = "Tìm kiếm";
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
+    
 
-        }
-
-        private void dataGridView1_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+       
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
@@ -438,5 +354,7 @@ namespace FileManagement
         {
 
         }
+
+     
     }
 }
