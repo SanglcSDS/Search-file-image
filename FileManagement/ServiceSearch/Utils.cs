@@ -32,6 +32,8 @@ namespace ServiceSearch
 
             return buffer.ToArray();
         }
+
+
         public static List<ModelInfoImage> GetMatchingImages(string path, ModelParameter modelParameter, Socket socketATM)
         {
             var matches = new List<ModelInfoImage>();
@@ -42,21 +44,23 @@ namespace ServiceSearch
             {
                 if (image.Contains(".jpg"))
                 {
-                    if (image.Contains(modelParameter.CardNumber) || image.Contains(modelParameter.TransNo))
+                    if (image.Contains(modelParameter.CardNumber))
 
                     {
-                        FileInfo info = new FileInfo(image);
-                        ModelInfoImage imtem = new ModelInfoImage
+                        if (image.Contains(modelParameter.TransNo))
                         {
-                            Name = info.Name,
-                            Url = info.FullName,
-                            size = Math.Ceiling(info.Length / 1024f).ToString("0 KB")
+                            FileInfo info = new FileInfo(image);
+                            ModelInfoImage imtem = new ModelInfoImage
+                            {
+                                Name = info.Name,
+                                Url = info.FullName,
+                                size = Math.Ceiling(info.Length / 1024f).ToString("0 KB")
 
-                        };
+                            };
+                            matches.Add(imtem);
 
-                     //   socketATM.Send(Encoding.ASCII.GetBytes(image));
-                       // socketATM.Send(Encoding.ASCII.GetBytes(Utils.fomartjson("DATA", "", "", "", "", null, imtem)));
-                        matches.Add(imtem);
+                        }
+
 
                     }
                 }
@@ -65,7 +69,7 @@ namespace ServiceSearch
             return matches;
         }
 
-        public static string fomartjson(string Status, string Messege, string TransNo, string CardNumber, string TransactionDate, List<string> Url, List<ModelInfoImage> modelInfoImage)
+        public static string fomartjson(string Status, string Messege, string TransNo, string CardNumber, string TransactionDate, string Url, List<ModelInfoImage> modelInfoImage)
         {
             ModelMessage parameter = new ModelMessage
             {

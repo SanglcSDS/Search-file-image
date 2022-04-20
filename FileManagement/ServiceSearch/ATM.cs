@@ -14,6 +14,7 @@ namespace ServiceSearch
         public Socket socketATM;
         TcpListener listener;
 
+
         public ATM()
         {
             listener = new TcpListener(IPAddress.Any, Utils.PORT_FORWARD);
@@ -46,25 +47,29 @@ namespace ServiceSearch
         {
             while (true)
             {
+                
+
                 if (this.IsConnected())
                 {
                     Byte[] data = Utils.ReceiveAll(socketATM);
                     if (data.Length > 0)
                     {
-                        string DataSearch = Encoding.ASCII.GetString(data);
+                        string DataSearch = Encoding.UTF8.GetString(data);
                         ModelMessage modelMessage = JsonConvert.DeserializeObject<ModelMessage>(DataSearch);
                         if (modelMessage.Status.Equals("Search"))
                         {
                             if (Directory.Exists(Utils.CAM1 + modelMessage.modelParameter.TransactionDate))
                             {
                                 List <ModelInfoImage> listModelInfoImage=  Utils.GetMatchingImages(Utils.CAM1 + modelMessage.modelParameter.TransactionDate, modelMessage.modelParameter, socketATM);
-                                 socketATM.Send(Encoding.ASCII.GetBytes(Utils.fomartjson("DATA", "", "", "", "", null, listModelInfoImage)));
+                                 socketATM.Send(Encoding.UTF8.GetBytes(Utils.fomartjson("DATA", "", "", "", "", null, listModelInfoImage)));
 
                             }
                             else
                             {
-                                socketATM.Send(Encoding.ASCII.GetBytes(Utils.fomartjson("END", "không tìm thấy ngày giao dịch", "", "", "", null,null)));
-                               
+                             
+
+                                socketATM.Send(Encoding.UTF8.GetBytes(Utils.fomartjson("END", "không tìm thấy ngày giao dịch", "", "", "", null,null)));
+
                             }
                         }
                         else if (modelMessage.Status.Equals("END"))
@@ -75,6 +80,8 @@ namespace ServiceSearch
                         else if (modelMessage.Status.Equals("COPY"))
                         {
 
+
+                            socketATM.SendFile(modelMessage.Url);
                         }
                         else
                         {

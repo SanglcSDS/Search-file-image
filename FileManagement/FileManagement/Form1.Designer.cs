@@ -38,7 +38,6 @@ namespace FileManagement
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lb_result = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.chk = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.btn_copy = new System.Windows.Forms.Button();
             this.date_TransactionDate = new System.Windows.Forms.DateTimePicker();
             this.btn_machine_IP = new System.Windows.Forms.Button();
@@ -50,6 +49,7 @@ namespace FileManagement
             this.txt_TransNo = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.lb_connect = new System.Windows.Forms.Label();
+            this.chk = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -119,12 +119,6 @@ namespace FileManagement
             this.dataGridView1.Size = new System.Drawing.Size(890, 234);
             this.dataGridView1.TabIndex = 13;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-         
-            // 
-            // chk
-            // 
-            this.chk.HeaderText = "";
-            this.chk.Name = "chk";
             // 
             // btn_copy
             // 
@@ -226,6 +220,12 @@ namespace FileManagement
             this.lb_connect.Size = new System.Drawing.Size(0, 13);
             this.lb_connect.TabIndex = 24;
             // 
+            // chk
+            // 
+            this.chk.HeaderText = "";
+            this.chk.Name = "chk";
+            this.chk.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -266,7 +266,6 @@ namespace FileManagement
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Label lb_result;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn chk;
         private System.Windows.Forms.Button btn_copy;
         private System.Windows.Forms.DateTimePicker date_TransactionDate;
         private System.Windows.Forms.Button btn_machine_IP;
@@ -278,6 +277,7 @@ namespace FileManagement
         private System.Windows.Forms.TextBox txt_TransNo;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lb_connect;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn chk;
     }
 }
 

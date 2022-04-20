@@ -38,6 +38,13 @@ namespace FileManagement
 
 
         }
+        public static void ConvertImage(string Url, byte[] data)
+        {
+            FileStream fs = File.Create(Url);
+
+            fs.Write(data, 0, data.Length);
+        }
+
 
         public static byte[] ReceiveAll(Socket socket)
         {

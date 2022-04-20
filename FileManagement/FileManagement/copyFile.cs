@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using Nancy.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,17 +42,50 @@ namespace FileManagement
                 {
                     for (int i = 0; i < listFileSource.Count; i++)
                     {
-                        if (listFileSource[i].Contains(".jpg"))
+
+                        string[] arrListStr = listFileSource[i].Split('\\');
+                        lblProgress.Invoke((Action)(() => lblProgress.Text = arrListStr[arrListStr.Length - 1]));
+                        worker.ReportProgress((int)(((i+1) * 100) / (listFileSource.Count )));
+
+                        //     File.Copy(listFileSource[i], target + "\\" + arrListStr[arrListStr.Length - 1], true);
+
+                        if (Form1.IsConnected())
                         {
-                            string[] arrListStr = listFileSource[i].Split('\\');
-                            lblProgress.Invoke((Action)(() => lblProgress.Text = arrListStr[arrListStr.Length - 1]));
-                            worker.ReportProgress((int)((i * 100) / (listFileSource.Count - 1)));
-                           
-                            File.Copy(listFileSource[i], target + "\\" + arrListStr[arrListStr.Length - 1], true);
+                            ModelMessage parameter = new ModelMessage
+                            {
+                                Status = "COPY",
+                                Messege = "",
+                                Url = listFileSource[i],
+                                modelInfoImage = null,
+                                modelParameter=null
+                            };
+                            string jsonparameter = new JavaScriptSerializer().Serialize(parameter);
+
+                            Byte[] data = Encoding.UTF8.GetBytes(jsonparameter);
+
+                            Form1.socketATM.Send(data);
+                        }
+                        while (true)
+                        {
+                            if (Form1.IsConnected())
+                            {
+                                Byte[] data = Utils.ReceiveAll(Form1.socketATM);
+
+
+                                if (data.Length > 0)
+                                {
+                                    Utils.ConvertImage(target + "\\" + arrListStr[arrListStr.Length - 1], data);
+                                    break;
+                                }
+
+
+                            }
+
                         }
 
+
                     }
-                  
+
 
                 }
             }
@@ -59,7 +93,7 @@ namespace FileManagement
             {
                 MessageBox.Show("Đường dẫn lưu file trùng đường dẫn thư mục");
             }
-           
+
 
         }
 

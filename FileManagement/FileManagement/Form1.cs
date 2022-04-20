@@ -17,6 +17,7 @@ using Nancy.Json;
 using Newtonsoft.Json;
 using System.Globalization;
 using Newtonsoft.Json.Linq;
+using System.Threading;
 
 namespace FileManagement
 {
@@ -26,8 +27,9 @@ namespace FileManagement
         public static int IP_ATM = Int32.Parse(ConfigurationManager.AppSettings["port_atm"]);
         public static int CHECK_CONNECTION_TIMEOUT = Int32.Parse(ConfigurationManager.AppSettings["check_connection_timeout"]);
         public static List<ModelMachine> listMachine;
-        public Socket socketATM;
+        public static Socket socketATM;
         public static List<ModelInfoImage> modelInfoImages;
+        public static List<string> listFullPart;
         TcpClient tcpClient;
         DataTable table;
 
@@ -50,6 +52,7 @@ namespace FileManagement
         private void Form1_Load(object sender, EventArgs e)
         {
             table = new DataTable();
+            table.Columns.Add("STT", typeof(int));
             table.Columns.Add("Tên File", typeof(string));
             table.Columns.Add("Thư mục", typeof(string));
             table.Columns.Add("Kích thức", typeof(string));
@@ -70,8 +73,8 @@ namespace FileManagement
             this.dataGridView1.Controls.Add(HeaderCheckBox);
 
             dataGridView1.DataSource = table;
-            this.dataGridView1.Columns[1].Width = 400;
-            this.dataGridView1.Columns[2].Width = 400;
+            this.dataGridView1.Columns[2].Width = 300;
+            this.dataGridView1.Columns[3].Width = 400;
 
             AddHeaderCheckBox();
 
@@ -79,6 +82,150 @@ namespace FileManagement
             // chkls_item_file.Items.AddRange(LIST_FILE);
         }
 
+
+
+     
+
+        private void bt_search_Click(object sender, EventArgs e)
+        {
+
+            if (socketATM != null)
+            {
+                if (IsConnected())
+                {
+                    backgroundWorker1.CancelAsync();
+                    lb_result.Text = "Kết quả";
+                    lblPercent.Text = "0%";
+                    lblProgress.Text = "";
+                    if (modelInfoImages != null)
+                        modelInfoImages.Clear();
+                    if (listFullPart != null)
+                        listFullPart.Clear();
+                    table = new DataTable();
+                    table.Columns.Add("STT", typeof(int));
+                    table.Columns.Add("Tên File", typeof(string));
+                    table.Columns.Add("Thư mục", typeof(string));
+                    table.Columns.Add("Kích thức", typeof(string));
+                    backgroundWorker1 = new BackgroundWorker();
+                    backgroundWorker1.WorkerReportsProgress = true;
+                    backgroundWorker1.WorkerSupportsCancellation = true;
+                    dataGridView1.DataSource = table;
+
+                    backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+                    backgroundWorker1.ProgressChanged += backgroundWorker1_ProgressChanged;
+                    backgroundWorker1.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
+                    dataGridView1.Refresh();
+                    ModelMessage parameter = new ModelMessage
+                    {
+                        Status = "Search",
+                        Messege = "",
+                        Url = null,
+                        modelInfoImage = null,
+                        modelParameter = new ModelParameter
+                        {
+                            CardNumber = txt_CardNumber.Text,
+                            TransNo = txt_TransNo.Text,
+                            TransactionDate = DateTime.ParseExact(date_TransactionDate.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("yyyyMMdd"),
+                        }
+                    };
+                    string jsonparameter = new JavaScriptSerializer().Serialize(parameter);
+                    if (IsConnected())
+                    {
+                        Byte[] data = Encoding.UTF8.GetBytes(jsonparameter);
+                        socketATM.Send(data);
+                    }
+
+                    if (IsConnected())
+                    {
+                        while (true)
+                        {
+
+                            Byte[] data = Utils.ReceiveAll(socketATM);
+
+
+                            if (data.Length > 0)
+                            {
+
+
+                                string dataSearch = Encoding.UTF8.GetString(data);
+                                ModelMessage modelMessage = JsonConvert.DeserializeObject<ModelMessage>(dataSearch);
+                                if (modelMessage.Status.Equals("END"))
+                                {
+                                    MessageBox.Show(modelMessage.Messege);
+                                    return;
+                                }
+                                else if (modelMessage.Status.Equals("DATA"))
+                                {
+                                    modelInfoImages = new List<ModelInfoImage>();
+                                    modelInfoImages.AddRange(modelMessage.modelInfoImage);
+                                    backgroundWorker1.RunWorkerAsync();
+                                    return;
+                                }
+                            }
+
+
+                        }
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Connec ID máy không thành công ");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Connec ID máy không thành công ");
+            }
+
+
+
+        }
+
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            progressBar1.Invoke((Action)(() => progressBar1.Maximum = modelInfoImages.Count));
+            for (int i = 0; i < modelInfoImages.Count; i++)
+            {
+                lblProgress.Invoke((Action)(() => lblProgress.Text = modelInfoImages[i].Name));
+                backgroundWorker1.ReportProgress((int)(i / modelInfoImages.Count * 100));
+
+                dataGridView1.Invoke((Action)(() =>
+                {
+                    table.Rows.Add(i + 1, modelInfoImages[i].Name, modelInfoImages[i].Url, modelInfoImages[i].size);
+                }));
+
+            }
+
+            backgroundWorker1.ReportProgress(100);
+        }
+
+
+
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (!backgroundWorker1.CancellationPending)
+            {
+                lblPercent.Text = e.ProgressPercentage + "%";
+                progressBar1.PerformStep();
+            }
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+
+            lb_result.Text = String.Format("Tìm thấy {0} tập tin.", table.Rows.Count);
+            //  lblProgress.Text = "";
+
+            if (progressBar1.Value < progressBar1.Maximum)
+            {
+                lblProgress.Text = "Dừng tìm kiếm. " + lblProgress.Text;
+            }
+            bt_search.Text = "Tìm kiếm";
+        }
 
 
         CheckBox HeaderCheckBox = null;
@@ -95,6 +242,23 @@ namespace FileManagement
             IsHeaderCheckBoxClicked = true;
             foreach (DataGridViewRow Row in dataGridView1.Rows)
             {
+                if (HcheckBox.Checked == true)
+                {
+                    Row.Cells[0].Style.BackColor = Color.LightGreen;
+                    Row.Cells[1].Style.BackColor = Color.LightGreen;
+                    Row.Cells[2].Style.BackColor = Color.LightGreen;
+                    Row.Cells[3].Style.BackColor = Color.LightGreen;
+                    Row.Cells[4].Style.BackColor = Color.LightGreen;
+
+                }
+                else
+                {
+                    Row.Cells[0].Style.BackColor = Color.White;
+                    Row.Cells[1].Style.BackColor = Color.White;
+                    Row.Cells[2].Style.BackColor = Color.White;
+                    Row.Cells[3].Style.BackColor = Color.White;
+                    Row.Cells[4].Style.BackColor = Color.White;
+                }
                 ((DataGridViewCheckBoxCell)Row.Cells["chk"]).Value = HcheckBox.Checked;
 
             }
@@ -106,134 +270,8 @@ namespace FileManagement
             HeaderCheckBoxClick((CheckBox)sender);
         }
 
-        public static List<string> listUrl;
-        private void bt_search_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine(date_TransactionDate.Text);
-
-            ModelMessage parameter = new ModelMessage
-            {
-                Status = "Search",
-                Messege = "",
-                Url = null,
-                modelInfoImage = null,
-                modelParameter = new ModelParameter
-                {
-                    CardNumber = txt_CardNumber.Text,
-                    TransNo = txt_TransNo.Text,
-                    TransactionDate = DateTime.ParseExact(date_TransactionDate.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("yyyyMMdd"),
-                }
-            };
-            string jsonparameter = new JavaScriptSerializer().Serialize(parameter);
-            if (socketATM != null)
-            {
-                if (this.IsConnected())
-                {
-                    Byte[] data = Encoding.ASCII.GetBytes(jsonparameter);
-                    socketATM.Send(data);
-                }
-                while (true)
-                {
-                    if (this.IsConnected())
-                    {
-                        Byte[] data = Utils.ReceiveAll(socketATM);
-                        if (data.Length > 0)
-                        {
-                            string dataSearch = Encoding.ASCII.GetString(data);
-
-                            ModelMessage modelMessage = JsonConvert.DeserializeObject<ModelMessage>(dataSearch);
-                            if (modelMessage.Status.Equals("END"))
-                            {
-                                MessageBox.Show(modelMessage.Messege);
-                                return;
-                            }
-                            else if (modelMessage.Status.Equals("DATA"))
-                            {
-                                modelInfoImages = new List<ModelInfoImage>();
-                                modelInfoImages.AddRange(modelMessage.modelInfoImage);
-                                backgroundWorker1.RunWorkerAsync();
-                                return;
-                            }
 
 
-                            /*else if(modelMessage.Status.Equals("DATA")) {
-                                Console.WriteLine(modelMessage.modelInfoImage.Name);
-                            
-                            }*/
-
-                        }
-
-
-                    }
-
-                }
-            }
-            else
-            {
-                MessageBox.Show("Connec ID máy không thành công ");
-            }
-
-
-
-        }
-
-        public static List<string> listFullPart;
-
- /*       public void AddToListView(string file)
-        {
-            FileInfo finfo = new FileInfo(file);
-            dataGridView1.Invoke((Action)(() =>
-            {
-                var icon = Icon.ExtractAssociatedIcon(file);
-                string key = Path.GetExtension(file);
-                imageList1.Images.Add(key, icon.ToBitmap());
-                imageList1.ImageSize = new Size(30, 30);
-
-                table.Rows.Add(finfo.Name, finfo.DirectoryName, Math.Ceiling(finfo.Length / 1024f).ToString("0 KB"));
-            }));
-
-        }*/
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            progressBar1.Invoke((Action)(() => progressBar1.Maximum = modelInfoImages.Count));
-            for (int i = 0; i < modelInfoImages.Count; i++)
-            {
-                backgroundWorker1.ReportProgress((int)(i / modelInfoImages.Count * 100));
-
-                table.Rows.Add(modelInfoImages[i].Name, modelInfoImages[i].Url, modelInfoImages[i].size);
-
-            }
-
-            backgroundWorker1.ReportProgress(100);
-        }
-
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            if (!backgroundWorker1.CancellationPending)
-            {
-                lblPercent.Text = e.ProgressPercentage + "%";
-                progressBar1.PerformStep();
-            }
-        }
-
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-
-
-            lb_result.Text = String.Format("Tìm thấy {0} tập tin.", table.Rows.Count);
-            lblProgress.Text = "";
-
-            if (progressBar1.Value < progressBar1.Maximum)
-            {
-                lblProgress.Text = "Dừng tìm kiếm. " + lblProgress.Text;
-            }
-            bt_search.Text = "Tìm kiếm";
-        }
-
-    
-
-       
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1) return;
@@ -244,19 +282,50 @@ namespace FileManagement
             if (row.Cells["chk"].Value == null)
             {
                 ((DataGridViewCheckBoxCell)row.Cells["chk"]).Value = true;
+                if (!(row.Cells["chk"].Value.ToString()).Equals("False"))
+                {
+                    dataGridView1.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.LightGreen;
+                    dataGridView1.Rows[e.RowIndex].Cells[2].Style.BackColor = Color.LightGreen;
+                    dataGridView1.Rows[e.RowIndex].Cells[3].Style.BackColor = Color.LightGreen;
+                    dataGridView1.Rows[e.RowIndex].Cells[4].Style.BackColor = Color.LightGreen;
+                }
+                //  dataGridView1.Rows[e.RowIndex].Cells[0].Style.BackColor = Color.LightGreen;
+           /*     dataGridView1.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.LightGreen;
+                dataGridView1.Rows[e.RowIndex].Cells[2].Style.BackColor = Color.LightGreen;
+                dataGridView1.Rows[e.RowIndex].Cells[3].Style.BackColor = Color.LightGreen;
+                dataGridView1.Rows[e.RowIndex].Cells[4].Style.BackColor = Color.LightGreen;*/
 
             }
             else
             {
-                Console.WriteLine(row.Cells["chk"].Value.ToString());
+               
                 if ((row.Cells["chk"].Value.ToString()).Equals("False"))
                 {
                     ((DataGridViewCheckBoxCell)row.Cells["chk"]).Value = true;
+                    // dataGridView1.Rows[e.RowIndex].Cells[0].Style.BackColor = Color.LightGreen;
+
+                    if (!(row.Cells["chk"].Value.ToString()).Equals("False"))
+                    {
+                        dataGridView1.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.LightGreen;
+                        dataGridView1.Rows[e.RowIndex].Cells[2].Style.BackColor = Color.LightGreen;
+                        dataGridView1.Rows[e.RowIndex].Cells[3].Style.BackColor = Color.LightGreen;
+                        dataGridView1.Rows[e.RowIndex].Cells[4].Style.BackColor = Color.LightGreen;
+                    }
                 }
                 else
                 {
+                   // dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                     ((DataGridViewCheckBoxCell)row.Cells["chk"]).Value = false;
+                    if ((row.Cells["chk"].Value.ToString()).Equals("False"))
+                    {
+                        dataGridView1.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.White;
+                        dataGridView1.Rows[e.RowIndex].Cells[2].Style.BackColor = Color.White;
+                        dataGridView1.Rows[e.RowIndex].Cells[3].Style.BackColor = Color.White;
+                        dataGridView1.Rows[e.RowIndex].Cells[4].Style.BackColor = Color.White;
+                    }
                 }
+                    // dataGridView1.Rows[e.RowIndex].Cells[0].Style.BackColor = Color.White;
+                   
 
             }
             dataGridView1.RefreshEdit();
@@ -265,8 +334,32 @@ namespace FileManagement
 
         private void btn_copy_Click(object sender, EventArgs e)
         {
-            copyFile f = new copyFile(this);
-            f.Show();
+            listFullPart = new List<string>();
+            for (int i = 0; i < dataGridView1.RowCount; i++)
+            {
+                if (Convert.ToBoolean(dataGridView1.Rows[i].Cells["chk"].Value) == true)
+                {
+                    if (dataGridView1.Rows[i].Cells[3].Value != null)
+                    {
+                        listFullPart.Add(dataGridView1.Rows[i].Cells[3].Value.ToString());
+                    }
+
+
+                }
+
+            }
+
+            if (listFullPart.Count > 0)
+            {
+                copyFile f = new copyFile(this);
+                f.Show();
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn file cần copy");
+
+            }
+            
 
         }
 
@@ -284,8 +377,8 @@ namespace FileManagement
                         btn_machine_IP.Text = "Close ID Máy ";
                         this.lb_connect.Text = "Connect to " + comboBox1.SelectedItem.ToString();
                         ModelMachine result = listMachine.Find(x => x.IDMachine == comboBox1.SelectedItem.ToString());
-                        TcpClient newTcpClient = new TcpClient(result.ip, IP_ATM);
-                        socketATM = newTcpClient.Client;
+                        tcpClient = new TcpClient(result.ip, IP_ATM);
+                        socketATM = tcpClient.Client;
                         if (socketATM.Connected)
                         {
                             btn_machine_IP.Enabled = true;
@@ -330,7 +423,7 @@ namespace FileManagement
 
         }
 
-        public bool IsConnected()
+        public static bool IsConnected()
         {
             try
             {
@@ -355,6 +448,6 @@ namespace FileManagement
 
         }
 
-     
+
     }
 }
