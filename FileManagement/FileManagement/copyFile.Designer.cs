@@ -48,7 +48,7 @@ namespace FileManagement
             // 
             // txt_copy_folder
             // 
-            this.txt_copy_folder.Location = new System.Drawing.Point(164, 19);
+            this.txt_copy_folder.Location = new System.Drawing.Point(164, 16);
             this.txt_copy_folder.Name = "txt_copy_folder";
             this.txt_copy_folder.Size = new System.Drawing.Size(411, 20);
             this.txt_copy_folder.TabIndex = 0;
@@ -56,7 +56,7 @@ namespace FileManagement
             // btn_open_folder_file
             // 
             this.btn_open_folder_file.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btn_open_folder_file.Location = new System.Drawing.Point(603, 17);
+            this.btn_open_folder_file.Location = new System.Drawing.Point(603, 13);
             this.btn_open_folder_file.Name = "btn_open_folder_file";
             this.btn_open_folder_file.Size = new System.Drawing.Size(140, 23);
             this.btn_open_folder_file.TabIndex = 1;
@@ -79,7 +79,7 @@ namespace FileManagement
             // 
             this.lb_total_file.AutoSize = true;
             this.lb_total_file.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold);
-            this.lb_total_file.Location = new System.Drawing.Point(9, 21);
+            this.lb_total_file.Location = new System.Drawing.Point(9, 16);
             this.lb_total_file.Name = "lb_total_file";
             this.lb_total_file.Size = new System.Drawing.Size(87, 15);
             this.lb_total_file.TabIndex = 4;
@@ -160,11 +160,14 @@ namespace FileManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(770, 153);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "copyFile";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.copyFile_FormClosing);
             this.Load += new System.EventHandler(this.Form2_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

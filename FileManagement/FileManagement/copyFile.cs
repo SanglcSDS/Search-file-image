@@ -91,7 +91,7 @@ namespace FileManagement
             }
             catch (Exception)
             {
-                MessageBox.Show("Đường dẫn lưu file trùng đường dẫn thư mục");
+              //  MessageBox.Show("Đường dẫn lưu file trùng đường dẫn thư mục");
             }
 
 
@@ -138,6 +138,31 @@ namespace FileManagement
             }
         }
 
-      
+        private void copyFile_FormClosing(object sender, FormClosingEventArgs e)
+        {
+           
+                if (worker.IsBusy)
+            {
+
+                if (e.CloseReason == CloseReason.WindowsShutDown) return;
+
+                if (this.DialogResult == DialogResult.Cancel)
+                {
+
+                    switch (MessageBox.Show(this, "Bạn chắc muốn thoát chứ", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    {
+
+                        case DialogResult.No:
+                            e.Cancel = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+
+
+        }
     }
 }

@@ -88,6 +88,7 @@ namespace FileManagement
 
         private void bt_search_Click(object sender, EventArgs e)
         {
+          //  bt_search.Enabled = false;
 
             if (socketATM != null)
             {
@@ -132,8 +133,10 @@ namespace FileManagement
                     string jsonparameter = new JavaScriptSerializer().Serialize(parameter);
                     if (IsConnected())
                     {
+
                         Byte[] data = Encoding.UTF8.GetBytes(jsonparameter);
                         socketATM.Send(data);
+                      
                     }
 
                     if (IsConnected())
@@ -152,11 +155,13 @@ namespace FileManagement
                                 ModelMessage modelMessage = JsonConvert.DeserializeObject<ModelMessage>(dataSearch);
                                 if (modelMessage.Status.Equals("END"))
                                 {
+                                    bt_search.Enabled = true;
                                     MessageBox.Show(modelMessage.Messege);
                                     return;
                                 }
                                 else if (modelMessage.Status.Equals("DATA"))
                                 {
+                                   
                                     modelInfoImages = new List<ModelInfoImage>();
                                     modelInfoImages.AddRange(modelMessage.modelInfoImage);
                                     TotalFiles = modelMessage.TotalFiles;
@@ -168,19 +173,23 @@ namespace FileManagement
 
                         }
 
+                        
+
                     }
                 }
                 else
                 {
+                   bt_search.Enabled = true;
                     MessageBox.Show("Connec ID máy không thành công ");
                 }
             }
             else
             {
+               bt_search.Enabled = true;
                 MessageBox.Show("Connec ID máy không thành công ");
             }
 
-
+          
 
         }
 
