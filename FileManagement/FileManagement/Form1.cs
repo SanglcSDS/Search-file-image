@@ -29,6 +29,7 @@ namespace FileManagement
         public static List<ModelMachine> listMachine;
         public static Socket socketATM;
         public static List<ModelInfoImage> modelInfoImages;
+        public static int TotalFiles;
         public static List<string> listFullPart;
         TcpClient tcpClient;
         DataTable table;
@@ -73,13 +74,12 @@ namespace FileManagement
             this.dataGridView1.Controls.Add(HeaderCheckBox);
 
             dataGridView1.DataSource = table;
-            this.dataGridView1.Columns[2].Width = 300;
+            this.dataGridView1.Columns[2].Width = 400;
             this.dataGridView1.Columns[3].Width = 400;
 
             AddHeaderCheckBox();
 
             HeaderCheckBox.MouseClick += new MouseEventHandler(HeaderCheckBox_MouseClick);
-            // chkls_item_file.Items.AddRange(LIST_FILE);
         }
 
 
@@ -95,7 +95,7 @@ namespace FileManagement
                 {
                     backgroundWorker1.CancelAsync();
                     lb_result.Text = "Kết quả";
-                    lblPercent.Text = "0%";
+                   
                     lblProgress.Text = "";
                     if (modelInfoImages != null)
                         modelInfoImages.Clear();
@@ -120,6 +120,7 @@ namespace FileManagement
                         Status = "Search",
                         Messege = "",
                         Url = null,
+                        TotalFiles=0,
                         modelInfoImage = null,
                         modelParameter = new ModelParameter
                         {
@@ -158,6 +159,7 @@ namespace FileManagement
                                 {
                                     modelInfoImages = new List<ModelInfoImage>();
                                     modelInfoImages.AddRange(modelMessage.modelInfoImage);
+                                    TotalFiles = modelMessage.TotalFiles;
                                     backgroundWorker1.RunWorkerAsync();
                                     return;
                                 }
@@ -185,7 +187,7 @@ namespace FileManagement
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            progressBar1.Invoke((Action)(() => progressBar1.Maximum = modelInfoImages.Count));
+         
             for (int i = 0; i < modelInfoImages.Count; i++)
             {
                 lblProgress.Invoke((Action)(() => lblProgress.Text = modelInfoImages[i].Name));
@@ -206,25 +208,17 @@ namespace FileManagement
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (!backgroundWorker1.CancellationPending)
-            {
-                lblPercent.Text = e.ProgressPercentage + "%";
-                progressBar1.PerformStep();
-            }
+            
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
 
 
-            lb_result.Text = String.Format("Tìm thấy {0} tập tin.", table.Rows.Count);
-            //  lblProgress.Text = "";
+            lb_result.Text = String.Format("Tìm thấy {0}/{1} tệp tin." , table.Rows.Count, TotalFiles);
+          
 
-            if (progressBar1.Value < progressBar1.Maximum)
-            {
-                lblProgress.Text = "Dừng tìm kiếm. " + lblProgress.Text;
-            }
-            bt_search.Text = "Tìm kiếm";
+          
         }
 
 
@@ -276,9 +270,6 @@ namespace FileManagement
         {
             if (e.RowIndex == -1) return;
             DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-
-
-
             if (row.Cells["chk"].Value == null)
             {
                 ((DataGridViewCheckBoxCell)row.Cells["chk"]).Value = true;
@@ -289,11 +280,6 @@ namespace FileManagement
                     dataGridView1.Rows[e.RowIndex].Cells[3].Style.BackColor = Color.LightGreen;
                     dataGridView1.Rows[e.RowIndex].Cells[4].Style.BackColor = Color.LightGreen;
                 }
-                //  dataGridView1.Rows[e.RowIndex].Cells[0].Style.BackColor = Color.LightGreen;
-           /*     dataGridView1.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.LightGreen;
-                dataGridView1.Rows[e.RowIndex].Cells[2].Style.BackColor = Color.LightGreen;
-                dataGridView1.Rows[e.RowIndex].Cells[3].Style.BackColor = Color.LightGreen;
-                dataGridView1.Rows[e.RowIndex].Cells[4].Style.BackColor = Color.LightGreen;*/
 
             }
             else
@@ -302,8 +288,6 @@ namespace FileManagement
                 if ((row.Cells["chk"].Value.ToString()).Equals("False"))
                 {
                     ((DataGridViewCheckBoxCell)row.Cells["chk"]).Value = true;
-                    // dataGridView1.Rows[e.RowIndex].Cells[0].Style.BackColor = Color.LightGreen;
-
                     if (!(row.Cells["chk"].Value.ToString()).Equals("False"))
                     {
                         dataGridView1.Rows[e.RowIndex].Cells[1].Style.BackColor = Color.LightGreen;
@@ -314,7 +298,7 @@ namespace FileManagement
                 }
                 else
                 {
-                   // dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                   
                     ((DataGridViewCheckBoxCell)row.Cells["chk"]).Value = false;
                     if ((row.Cells["chk"].Value.ToString()).Equals("False"))
                     {
@@ -324,7 +308,7 @@ namespace FileManagement
                         dataGridView1.Rows[e.RowIndex].Cells[4].Style.BackColor = Color.White;
                     }
                 }
-                    // dataGridView1.Rows[e.RowIndex].Cells[0].Style.BackColor = Color.White;
+                    
                    
 
             }
@@ -351,8 +335,17 @@ namespace FileManagement
 
             if (listFullPart.Count > 0)
             {
-                copyFile f = new copyFile(this);
-                f.Show();
+                if (IsConnected())
+                {
+                    copyFile f = new copyFile(this);
+                    f.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Connec ID máy không thành công ");
+
+                }
+                   
             }
             else
             {
@@ -443,11 +436,7 @@ namespace FileManagement
                 return false;
             }
         }
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
-        }
-
-
+      
     }
 }

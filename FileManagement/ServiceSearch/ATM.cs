@@ -60,8 +60,8 @@ namespace ServiceSearch
                         {
                             if (Directory.Exists(Utils.CAM1 + modelMessage.modelParameter.TransactionDate))
                             {
-                                List <ModelInfoImage> listModelInfoImage=  Utils.GetMatchingImages(Utils.CAM1 + modelMessage.modelParameter.TransactionDate, modelMessage.modelParameter, socketATM);
-                                 socketATM.Send(Encoding.UTF8.GetBytes(Utils.fomartjson("DATA", "", "", "", "", null, listModelInfoImage)));
+                                ModelMessage listModelInfoImage =  Utils.GetMatchingImages(Utils.CAM1 + modelMessage.modelParameter.TransactionDate, modelMessage.modelParameter, socketATM);
+                                 socketATM.Send(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(listModelInfoImage)));
 
                             }
                             else

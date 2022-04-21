@@ -16,7 +16,6 @@ E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Debug\FileManagem
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Debug\FileManagement.Form1.resources
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Debug\FileManagement.copyFile.resources
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Debug\FileManagement.Properties.Resources.resources
-E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Debug\FileManagement.SearchMachineID.resources
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Debug\FileManagement.csproj.GenerateResource.cache
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Debug\FileManagement.csproj.CoreCompileInputs.cache
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Debug\FileManagement.exe

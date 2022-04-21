@@ -34,16 +34,20 @@ namespace ServiceSearch
         }
 
 
-        public static List<ModelInfoImage> GetMatchingImages(string path, ModelParameter modelParameter, Socket socketATM)
+        public static ModelMessage GetMatchingImages(string path, ModelParameter modelParameter, Socket socketATM)
         {
+            ModelMessage modelMessage = new ModelMessage();
+
+            int TotalFiles = 0;
             var matches = new List<ModelInfoImage>();
 
-            var images = System.IO.Directory.GetFiles(path);
+            var images = Directory.GetFiles(path);
 
             foreach (var image in images)
             {
                 if (image.Contains(".jpg"))
                 {
+                    TotalFiles = TotalFiles + 1;
                     if (image.Contains(modelParameter.CardNumber))
 
                     {
@@ -65,8 +69,11 @@ namespace ServiceSearch
                     }
                 }
             }
+            modelMessage.Status = "DATA";
+            modelMessage.modelInfoImage= matches;
+            modelMessage.TotalFiles = TotalFiles;
 
-            return matches;
+            return modelMessage;
         }
 
         public static string fomartjson(string Status, string Messege, string TransNo, string CardNumber, string TransactionDate, string Url, List<ModelInfoImage> modelInfoImage)
@@ -77,6 +84,7 @@ namespace ServiceSearch
                 Messege = Messege,
                 modelInfoImage = modelInfoImage,
                 Url = Url,
+                TotalFiles = 0,
                 modelParameter = new ModelParameter
                 {
                     CardNumber = CardNumber,

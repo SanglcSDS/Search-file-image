@@ -11,6 +11,8 @@ namespace FileManagement
         public string Messege { get; set; }
         public ModelParameter modelParameter { get; set; }
         public List< ModelInfoImage> modelInfoImage { get; set; }
+        public int TotalFiles { get; set; }
+
         public string Url { get; set; }
     }
 }
