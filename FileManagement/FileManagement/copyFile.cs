@@ -149,7 +149,7 @@ namespace FileManagement
                 if (this.DialogResult == DialogResult.Cancel)
                 {
 
-                    switch (MessageBox.Show(this, "Bạn chắc muốn thoát chứ", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    switch (MessageBox.Show(this, "Bạn chắc muốn thoát?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                     {
 
                         case DialogResult.No:

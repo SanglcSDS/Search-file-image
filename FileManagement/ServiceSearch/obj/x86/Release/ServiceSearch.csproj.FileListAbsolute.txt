@@ -1,0 +1,11 @@
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\bin\x86\Release\ServiceSearch.exe.config
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\bin\x86\Release\ServiceSearch.exe
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\bin\x86\Release\ServiceSearch.pdb
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\bin\x86\Release\Newtonsoft.Json.dll
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\bin\x86\Release\Newtonsoft.Json.xml
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Release\ServiceSearch.ProjectInstaller.resources
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Release\ServiceSearch.csproj.GenerateResource.cache
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Release\ServiceSearch.csproj.CoreCompileInputs.cache
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Release\ServiceSearch.exe
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Release\ServiceSearch.pdb
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Release\ServiceSearch.csproj.CopyComplete

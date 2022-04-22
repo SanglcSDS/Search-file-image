@@ -1,5 +1,4 @@
 E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Debug\ServiceSearch.csproj.CoreCompileInputs.cache
-E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Debug\ServiceSearch.csproj.AssemblyReference.cache
 E:\ASP\Search-file-image\FileManagement\ServiceSearch\bin\x86\Debug\ServiceSearch.exe.config
 E:\ASP\Search-file-image\FileManagement\ServiceSearch\bin\x86\Debug\ServiceSearch.exe
 E:\ASP\Search-file-image\FileManagement\ServiceSearch\bin\x86\Debug\ServiceSearch.pdb
@@ -7,3 +6,6 @@ E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Debug\ServiceSearc
 E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Debug\ServiceSearch.pdb
 E:\ASP\Search-file-image\FileManagement\ServiceSearch\bin\x86\Debug\Newtonsoft.Json.dll
 E:\ASP\Search-file-image\FileManagement\ServiceSearch\bin\x86\Debug\Newtonsoft.Json.xml
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Debug\ServiceSearch.ProjectInstaller.resources
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Debug\ServiceSearch.csproj.GenerateResource.cache
+E:\ASP\Search-file-image\FileManagement\ServiceSearch\obj\x86\Debug\ServiceSearch.csproj.AssemblyReference.cache
