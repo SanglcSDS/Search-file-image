@@ -14,7 +14,6 @@ E:\ASP\Search-file-image\FileManagement\FileManagement\bin\x86\Release\Microsoft
 E:\ASP\Search-file-image\FileManagement\FileManagement\bin\x86\Release\Microsoft.WindowsAPICodePack.ShellExtensions.xml
 E:\ASP\Search-file-image\FileManagement\FileManagement\bin\x86\Release\Nancy.xml
 E:\ASP\Search-file-image\FileManagement\FileManagement\bin\x86\Release\Newtonsoft.Json.xml
-E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.csproj.AssemblyReference.cache
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.Form1.resources
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.copyFile.resources
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.Properties.Resources.resources
@@ -22,3 +21,4 @@ E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManag
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.csproj.CoreCompileInputs.cache
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.exe
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.pdb
+E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.csproj.CopyComplete

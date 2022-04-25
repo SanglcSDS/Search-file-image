@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace ServiceSearch
 {
@@ -60,7 +61,17 @@ namespace ServiceSearch
                         {
                             if (Directory.Exists(Utils.CAM1 + modelMessage.modelParameter.TransactionDate))
                             {
+                               /* Thread th_one = new Thread(() =>
+                                {
+
+
+
+                                });
+                               th_one.Start();
+                               th_one.Join();*/
+
                                 ModelMessage listModelInfoImage =  Utils.GetMatchingImages(Utils.CAM1 + modelMessage.modelParameter.TransactionDate, modelMessage.modelParameter, socketATM);
+
                                  socketATM.Send(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(listModelInfoImage)));
 
                             }

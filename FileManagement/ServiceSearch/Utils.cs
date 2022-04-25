@@ -36,6 +36,7 @@ namespace ServiceSearch
 
         public static ModelMessage GetMatchingImages(string path, ModelParameter modelParameter, Socket socketATM)
         {
+
             ModelMessage modelMessage = new ModelMessage();
 
             int TotalFiles = 0;
