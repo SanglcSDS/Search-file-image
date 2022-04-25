@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -12,6 +13,8 @@ namespace ServiceSearch
 {
     public class ATM
     {
+        ModelMessage cam1 = null;
+        ModelMessage cam2 = null;
         public Socket socketATM;
         TcpListener listener;
 
@@ -48,7 +51,7 @@ namespace ServiceSearch
         {
             while (true)
             {
-                
+
 
                 if (this.IsConnected())
                 {
@@ -59,27 +62,43 @@ namespace ServiceSearch
                         ModelMessage modelMessage = JsonConvert.DeserializeObject<ModelMessage>(DataSearch);
                         if (modelMessage.Status.Equals("Search"))
                         {
-                            if (Directory.Exists(Utils.CAM1 + modelMessage.modelParameter.TransactionDate))
-                            {
-                               /* Thread th_one = new Thread(() =>
-                                {
 
+                            if (Directory.Exists(Utils.CAM1 + modelMessage.modelParameter.TransactionDate) && Directory.Exists(Utils.CAM2 + modelMessage.modelParameter.TransactionDate))
+                            {
+
+                                cam1 = new ModelMessage();
+                                cam2 = new ModelMessage();
+
+                                Thread th_one = new Thread(() =>
+                                {
+                                    cam1 = Utils.GetMatchingImages(Utils.CAM1 + modelMessage.modelParameter.TransactionDate, modelMessage.modelParameter, socketATM);
+                                    cam2 = Utils.GetMatchingImages(Utils.CAM2 + modelMessage.modelParameter.TransactionDate, modelMessage.modelParameter, socketATM);
 
 
                                 });
-                               th_one.Start();
-                               th_one.Join();*/
+                                th_one.Start();
+                                th_one.Join();
+                                ModelMessage listModelInfoImage = new ModelMessage()
+                                {
+                                    Messege = null,
+                                    Status = "DATA",
+                                    Url = null,
+                                    modelParameter = null,
+                                    TotalFiles = cam1.TotalFiles + cam2.TotalFiles,
+                                    modelInfoImage=cam1.modelInfoImage.Concat(cam2.modelInfoImage).ToList(),
+                                };
 
-                                ModelMessage listModelInfoImage =  Utils.GetMatchingImages(Utils.CAM1 + modelMessage.modelParameter.TransactionDate, modelMessage.modelParameter, socketATM);
+                              //  ModelMessage listModelInfoImage = Utils.GetMatchingImages(Utils.CAM1 + modelMessage.modelParameter.TransactionDate, modelMessage.modelParameter, socketATM);
 
-                                 socketATM.Send(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(listModelInfoImage)));
+                                socketATM.Send(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(listModelInfoImage)));
 
                             }
+                            
                             else
                             {
-                             
 
-                                socketATM.Send(Encoding.UTF8.GetBytes(Utils.fomartjson("END", "không tìm thấy ngày giao dịch", "", "", "", null,null)));
+
+                                socketATM.Send(Encoding.UTF8.GetBytes(Utils.fomartjson("END", "không tìm thấy ngày giao dịch", "", "", "", null, null)));
 
                             }
                         }
@@ -94,11 +113,7 @@ namespace ServiceSearch
 
                             socketATM.SendFile(modelMessage.Url);
                         }
-                        else
-                        {
-
-
-                        }
+                       
 
 
 

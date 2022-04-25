@@ -15,6 +15,7 @@ namespace ServiceSearch
         public static int PORT_FORWARD = Int32.Parse(ConfigurationManager.AppSettings["port_listen"]);
         public static int SEND_DATA_TIMEOUT = Int32.Parse(ConfigurationManager.AppSettings["send_data_timeout"]);
         public static string CAM1 = ConfigurationManager.AppSettings["cam1"];
+        public static string CAM2 = ConfigurationManager.AppSettings["cam2"];
         public static byte[] ReceiveAll(Socket socket)
         {
             var buffer = new List<byte>();
