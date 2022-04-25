@@ -23,7 +23,8 @@ namespace FileManagement
 {
     public partial class Form1 : Form
     {
-        private static string[] MACHINE_ID = ConfigurationManager.AppSettings["Machine_ID"].Split(new char[] { ',' });
+       // private static string[] MACHINE_ID = ConfigurationManager.AppSettings["Machine_ID"].Split(new char[] { ',' });
+        private static string URL_PART_MACHINE_ID = ConfigurationManager.AppSettings["Url_Part_Machine_ID"];
         public static int IP_ATM = Int32.Parse(ConfigurationManager.AppSettings["port_atm"]);
         public static int CHECK_CONNECTION_TIMEOUT = Int32.Parse(ConfigurationManager.AppSettings["check_connection_timeout"]);
         public static List<ModelMachine> listMachine;
@@ -50,6 +51,7 @@ namespace FileManagement
 
         }
 
+
         private void Form1_Load(object sender, EventArgs e)
         {
             table = new DataTable();
@@ -58,19 +60,8 @@ namespace FileManagement
             table.Columns.Add("Thư mục", typeof(string));
             table.Columns.Add("Kích thức", typeof(string));
             listMachine = new List<ModelMachine>();
-            foreach (string item in MACHINE_ID)
-            {
-                ModelMachine machine = new ModelMachine();
-                if (item.IndexOf(":") > 0)
-                {
-                    comboBox1.Items.Add(item.Split(new char[] { ':' })[0]);
-                    machine.IDMachine = item.Split(new char[] { ':' })[0];
-                    machine.ip = item.Split(new char[] { ':' })[1];
-                    listMachine.Add(machine);
-                }
-
-
-            }
+            listMachine =Utils.listMachines(URL_PART_MACHINE_ID,comboBox1);
+       
             this.dataGridView1.Controls.Add(HeaderCheckBox);
 
             dataGridView1.DataSource = table;
@@ -84,11 +75,11 @@ namespace FileManagement
 
 
 
-     
+
 
         private void bt_search_Click(object sender, EventArgs e)
         {
-          //  bt_search.Enabled = false;
+            //  bt_search.Enabled = false;
 
             if (socketATM != null)
             {
@@ -96,8 +87,8 @@ namespace FileManagement
                 {
                     backgroundWorker1.CancelAsync();
                     lb_result.Text = "Kết quả";
-                   
-                    lblProgress.Text = "";
+
+                   // lblProgress.Text = "";
                     if (modelInfoImages != null)
                         modelInfoImages.Clear();
                     if (listFullPart != null)
@@ -121,7 +112,7 @@ namespace FileManagement
                         Status = "Search",
                         Messege = "",
                         Url = null,
-                        TotalFiles=0,
+                        TotalFiles = 0,
                         modelInfoImage = null,
                         modelParameter = new ModelParameter
                         {
@@ -136,7 +127,7 @@ namespace FileManagement
 
                         Byte[] data = Encoding.UTF8.GetBytes(jsonparameter);
                         socketATM.Send(data);
-                      
+
                     }
 
                     if (IsConnected())
@@ -161,7 +152,7 @@ namespace FileManagement
                                 }
                                 else if (modelMessage.Status.Equals("DATA"))
                                 {
-                                   
+
                                     modelInfoImages = new List<ModelInfoImage>();
                                     modelInfoImages.AddRange(modelMessage.modelInfoImage);
                                     TotalFiles = modelMessage.TotalFiles;
@@ -173,33 +164,33 @@ namespace FileManagement
 
                         }
 
-                        
+
 
                     }
                 }
                 else
                 {
-                   bt_search.Enabled = true;
+                    bt_search.Enabled = true;
                     MessageBox.Show("Connec ID máy không thành công ");
                 }
             }
             else
             {
-               bt_search.Enabled = true;
+                bt_search.Enabled = true;
                 MessageBox.Show("Connec ID máy không thành công ");
             }
 
-          
+
 
         }
 
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-         
+
             for (int i = 0; i < modelInfoImages.Count; i++)
             {
-                lblProgress.Invoke((Action)(() => lblProgress.Text = modelInfoImages[i].Name));
+              //  lblProgress.Invoke((Action)(() => lblProgress.Text = modelInfoImages[i].Name));
                 backgroundWorker1.ReportProgress((int)(i / modelInfoImages.Count * 100));
 
                 dataGridView1.Invoke((Action)(() =>
@@ -217,17 +208,17 @@ namespace FileManagement
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            
+
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
 
 
-            lb_result.Text = String.Format("Tìm thấy {0}/{1} tệp tin." , table.Rows.Count, TotalFiles);
-          
+            lb_result.Text = String.Format("Tìm thấy {0}/{1} tệp tin.", table.Rows.Count, TotalFiles);
 
-          
+
+
         }
 
 
@@ -293,7 +284,7 @@ namespace FileManagement
             }
             else
             {
-               
+
                 if ((row.Cells["chk"].Value.ToString()).Equals("False"))
                 {
                     ((DataGridViewCheckBoxCell)row.Cells["chk"]).Value = true;
@@ -307,7 +298,7 @@ namespace FileManagement
                 }
                 else
                 {
-                   
+
                     ((DataGridViewCheckBoxCell)row.Cells["chk"]).Value = false;
                     if ((row.Cells["chk"].Value.ToString()).Equals("False"))
                     {
@@ -317,8 +308,8 @@ namespace FileManagement
                         dataGridView1.Rows[e.RowIndex].Cells[4].Style.BackColor = Color.White;
                     }
                 }
-                    
-                   
+
+
 
             }
             dataGridView1.RefreshEdit();
@@ -354,14 +345,14 @@ namespace FileManagement
                     MessageBox.Show("Connec ID máy không thành công ");
 
                 }
-                   
+
             }
             else
             {
                 MessageBox.Show("Vui lòng chọn file cần copy");
 
             }
-            
+
 
         }
 
@@ -372,6 +363,7 @@ namespace FileManagement
 
                 if (comboBox1.SelectedItem != null)
                 {
+                    lb_result.Text = "Kết quả";
                     if (btn_machine_IP.Text == "Connect ID Máy ")
                     {
                         btn_machine_IP.Enabled = false;
@@ -446,6 +438,6 @@ namespace FileManagement
             }
         }
 
-      
+
     }
 }

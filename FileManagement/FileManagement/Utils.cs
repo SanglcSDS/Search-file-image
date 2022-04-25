@@ -38,11 +38,14 @@ namespace FileManagement
 
 
         }
+
+
         public static void ConvertImage(string Url, byte[] data)
         {
-            FileStream fs = File.Create(Url);
-
+            FileStream fs =   File.Create(Url);
+          
             fs.Write(data, 0, data.Length);
+            fs.Close();
         }
 
 
@@ -62,6 +65,29 @@ namespace FileManagement
             }
 
             return buffer.ToArray();
+        }
+        public static List<ModelMachine> listMachines(string part, ComboBox comboBox1)
+        {
+            List<ModelMachine> listMachines = new List<ModelMachine>();
+            using (var stream = new FileStream(path: part, mode: FileMode.Open, access: FileAccess.ReadWrite, share: FileShare.ReadWrite))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string item;
+                    while ((item = reader.ReadLine()) != null)
+                    {
+                        ModelMachine machine = new ModelMachine();
+                        if (item.IndexOf(":") > 0)
+                        {
+                            comboBox1.Items.Add(item.Split(new char[] { ':' })[0]);
+                            machine.IDMachine = item.Split(new char[] { ':' })[0];
+                            machine.ip = item.Split(new char[] { ':' })[1];
+                            listMachines.Add(machine);
+                        }
+                    }
+                }
+            }
+            return listMachines;
         }
     }
 }

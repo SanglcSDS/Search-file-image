@@ -43,7 +43,6 @@ namespace FileManagement
             this.label5 = new System.Windows.Forms.Label();
             this.txt_TransNo = new System.Windows.Forms.TextBox();
             this.date_TransactionDate = new System.Windows.Forms.DateTimePicker();
-            this.lblProgress = new System.Windows.Forms.Label();
             this.lb_result = new System.Windows.Forms.Label();
             this.bt_search = new System.Windows.Forms.Button();
             this.btn_copy = new System.Windows.Forms.Button();
@@ -167,14 +166,6 @@ namespace FileManagement
             this.date_TransactionDate.Size = new System.Drawing.Size(152, 22);
             this.date_TransactionDate.TabIndex = 15;
             // 
-            // lblProgress
-            // 
-            this.lblProgress.AutoSize = true;
-            this.lblProgress.Location = new System.Drawing.Point(184, 60);
-            this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(0, 13);
-            this.lblProgress.TabIndex = 7;
-            // 
             // lb_result
             // 
             this.lb_result.AutoSize = true;
@@ -188,9 +179,9 @@ namespace FileManagement
             // bt_search
             // 
             this.bt_search.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold);
-            this.bt_search.Location = new System.Drawing.Point(790, 19);
+            this.bt_search.Location = new System.Drawing.Point(786, 16);
             this.bt_search.Name = "bt_search";
-            this.bt_search.Size = new System.Drawing.Size(94, 54);
+            this.bt_search.Size = new System.Drawing.Size(94, 33);
             this.bt_search.TabIndex = 1;
             this.bt_search.Text = "Tìm kiếm";
             this.bt_search.UseVisualStyleBackColor = true;
@@ -245,7 +236,6 @@ namespace FileManagement
             this.groupBox2.Controls.Add(this.bt_search);
             this.groupBox2.Controls.Add(this.txt_TransNo);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.lblProgress);
             this.groupBox2.Controls.Add(this.lb_result);
             this.groupBox2.Controls.Add(this.txt_CardNumber);
             this.groupBox2.Controls.Add(this.label4);
@@ -321,7 +311,6 @@ namespace FileManagement
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txt_TransNo;
         private System.Windows.Forms.DateTimePicker date_TransactionDate;
-        private System.Windows.Forms.Label lblProgress;
         private System.Windows.Forms.Label lb_result;
         private System.Windows.Forms.Button bt_search;
         private System.Windows.Forms.Button btn_copy;
