@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="icon\icon_mitec.ico" />
+    <None Remove="icon\icon_mitec.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon\icon_mitec.ico" />
+    <Content Include="icon\icon_mitec.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAPICodePack-Shell" Version="1.1.0" />
+    <PackageReference Include="Nancy" Version="2.0.0" />
+  </ItemGroup>
+
+</Project>

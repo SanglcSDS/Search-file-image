@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceSearch", "ServiceSea
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupServiceSearch", "SetupServiceSearch\SetupServiceSearch.vdproj", "{AB50708C-CE46-4887-B1E5-3A7B0082894B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchImage", "SearchImage\SearchImage.csproj", "{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,14 @@ Global
 		{AB50708C-CE46-4887-B1E5-3A7B0082894B}.Release|Any CPU.ActiveCfg = Release
 		{AB50708C-CE46-4887-B1E5-3A7B0082894B}.Release|x86.ActiveCfg = Release
 		{AB50708C-CE46-4887-B1E5-3A7B0082894B}.Release|x86.Build.0 = Release
+		{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}.Debug|x86.Build.0 = Debug|Any CPU
+		{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}.Release|x86.ActiveCfg = Release|Any CPU
+		{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
