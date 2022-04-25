@@ -58,7 +58,7 @@ namespace SearchImage
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 22);
+            this.label1.Location = new System.Drawing.Point(9, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 15);
             this.label1.TabIndex = 0;
@@ -70,18 +70,18 @@ namespace SearchImage
             this.comboBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comboBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(77, 19);
+            this.comboBox1.Location = new System.Drawing.Point(77, 14);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(380, 23);
+            this.comboBox1.Size = new System.Drawing.Size(540, 23);
             this.comboBox1.TabIndex = 1;
             // 
             // bt_search
             // 
-            this.bt_search.Location = new System.Drawing.Point(551, 19);
+            this.bt_search.Location = new System.Drawing.Point(633, 15);
             this.bt_search.Name = "bt_search";
-            this.bt_search.Size = new System.Drawing.Size(75, 23);
+            this.bt_search.Size = new System.Drawing.Size(119, 23);
             this.bt_search.TabIndex = 2;
-            this.bt_search.Text = "button1";
+            this.bt_search.Text = "Connect ID Máy ";
             this.bt_search.UseVisualStyleBackColor = true;
             this.bt_search.Click += new System.EventHandler(this.bt_search_Click);
             // 
@@ -101,7 +101,7 @@ namespace SearchImage
             // lb_connect
             // 
             this.lb_connect.AutoSize = true;
-            this.lb_connect.Location = new System.Drawing.Point(679, 19);
+            this.lb_connect.Location = new System.Drawing.Point(781, 19);
             this.lb_connect.Name = "lb_connect";
             this.lb_connect.Size = new System.Drawing.Size(44, 15);
             this.lb_connect.TabIndex = 4;
@@ -129,65 +129,65 @@ namespace SearchImage
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(9, 56);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 15);
+            this.label5.Size = new System.Drawing.Size(49, 15);
             this.label5.TabIndex = 9;
-            this.label5.Text = "ID Máy";
+            this.label5.Text = "Kết Quả";
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(246, 20);
+            this.textBox2.Location = new System.Drawing.Point(317, 16);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 23);
+            this.textBox2.Size = new System.Drawing.Size(129, 23);
             this.textBox2.TabIndex = 8;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(77, 20);
+            this.textBox1.Location = new System.Drawing.Point(77, 15);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 23);
+            this.textBox1.Size = new System.Drawing.Size(129, 23);
             this.textBox1.TabIndex = 7;
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(474, 20);
+            this.dateTimePicker1.Location = new System.Drawing.Point(572, 15);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(123, 23);
+            this.dateTimePicker1.Size = new System.Drawing.Size(157, 23);
             this.dateTimePicker1.TabIndex = 6;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(183, 27);
+            this.label4.Location = new System.Drawing.Point(255, 21);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(44, 15);
+            this.label4.Size = new System.Drawing.Size(53, 15);
             this.label4.TabIndex = 5;
-            this.label4.Text = "ID Máy";
+            this.label4.Text = "Trans No";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(394, 34);
+            this.label2.Location = new System.Drawing.Point(462, 19);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 15);
+            this.label2.Size = new System.Drawing.Size(89, 15);
             this.label2.TabIndex = 4;
-            this.label2.Text = "ID Máy";
+            this.label2.Text = "Ngày Giao Dịch";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(6, 23);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 15);
+            this.label3.Size = new System.Drawing.Size(42, 15);
             this.label3.TabIndex = 0;
-            this.label3.Text = "ID Máy";
+            this.label3.Text = "Số Thẻ";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(654, 23);
+            this.button1.Location = new System.Drawing.Point(854, 22);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(96, 23);
             this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
+            this.button1.Text = "Tìm Kiếm";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // groupBox3
@@ -206,7 +206,7 @@ namespace SearchImage
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
-            this.button2.Text = "button2";
+            this.button2.Text = "Copy File";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
