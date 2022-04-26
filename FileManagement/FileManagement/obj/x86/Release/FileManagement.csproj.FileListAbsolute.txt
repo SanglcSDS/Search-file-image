@@ -22,3 +22,11 @@ E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManag
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.exe
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.pdb
 E:\ASP\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.csproj.CopyComplete
+D:\bvb\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.csproj.AssemblyReference.cache
+D:\bvb\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.Form1.resources
+D:\bvb\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.copyFile.resources
+D:\bvb\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.Properties.Resources.resources
+D:\bvb\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.csproj.GenerateResource.cache
+D:\bvb\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.csproj.CoreCompileInputs.cache
+D:\bvb\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.exe
+D:\bvb\Search-file-image\FileManagement\FileManagement\obj\x86\Release\FileManagement.pdb

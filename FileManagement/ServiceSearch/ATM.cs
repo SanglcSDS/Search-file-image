@@ -124,15 +124,14 @@ namespace ServiceSearch
         public void Close()
         {
             if (socketATM.Connected)
-                socketATM.Close();
-            listener.Stop();
+                this.socketATM.Close();
+            this.listener.Stop();
         }
 
         public void Terminate()
         {
             if (socketATM.Connected)
-                socketATM.Close();
-            listener.Stop();
+                this.socketATM.Close();
         }
     }
 }

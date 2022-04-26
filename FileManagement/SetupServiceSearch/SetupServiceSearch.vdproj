@@ -15,7 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_8A413F28450D9ABB3870EEC185F5F419"
+        "MsmKey" = "8:_2CE717CCE3D1A795C60B99566B6CB0BB"
         "OwnerKey" = "8:_9BA89A2B80E54EC68A735A313BCFF720"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -34,7 +34,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8A413F28450D9ABB3870EEC185F5F419"
+        "OwnerKey" = "8:_2CE717CCE3D1A795C60B99566B6CB0BB"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -152,7 +152,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.7.2"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.5"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=863262"
                 }
@@ -160,14 +160,14 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8A413F28450D9ABB3870EEC185F5F419"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2CE717CCE3D1A795C60B99566B6CB0BB"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_8A413F28450D9ABB3870EEC185F5F419"
+                    "_2CE717CCE3D1A795C60B99566B6CB0BB"
                     {
                     "Name" = "8:Newtonsoft.Json.dll"
                     "Attributes" = "3:512"
