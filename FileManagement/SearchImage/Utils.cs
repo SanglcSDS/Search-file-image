@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FileManagement
+namespace SearchImage
 {
     public static class Utils
     {

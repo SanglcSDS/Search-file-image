@@ -41,7 +41,7 @@ namespace FileManagement
 
 
             InitializeComponent();
-            backgroundWorker1 = new BackgroundWorker();
+           backgroundWorker1 = new BackgroundWorker();
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
 

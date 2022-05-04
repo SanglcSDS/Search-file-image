@@ -24,3 +24,4 @@ E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Debug\net5.0-windows\Sea
 E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Debug\net5.0-windows\ref\SearchImage.dll
 E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Debug\net5.0-windows\SearchImage.pdb
 E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Debug\net5.0-windows\SearchImage.genruntimeconfig.cache
+E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Debug\net5.0-windows\SearchImage.copyFile.resources
