@@ -34,6 +34,10 @@ namespace FileManagement
         public static List<string> listFullPart;
         TcpClient tcpClient;
         DataTable table;
+        public static string ReadConfigKey = "SOFTWARE\\WOW6432Node\\Biometric\\Forwarder";
+        private string prKey1 = "TGUgQ29uZyBTYW5nIERldg";
+        private string prKey2 = "TGUgQ29uZyBTYW5nIERKENSldg";
+        public static string keyPublic = "";
 
 
         public Form1()
@@ -51,26 +55,80 @@ namespace FileManagement
 
         }
 
+        private bool CheckLicense()
+        {
+            try
+            {
+                string cipherText = ManagedAes.Decrypt(Regedit.ReadKey(ReadConfigKey, "PRIVATEKEY") ?? "ABCDEF", prKey2);
+                cipherText = ManagedAes.Decrypt(cipherText, prKey2);
+                if (HardwareInfo.IsInvalid(cipherText))
+                {
+                    License_Update();
+                    return true;
+                }
+            }
+            catch
+            {
+            }
+            return false;
+        }
+      
+
+        private bool License_Update()
+        {
+            try
+            {
+                string clearText = ManagedAes.Encrypt(HardwareInfo.Info(), prKey2);
+                clearText = ManagedAes.Encrypt(clearText, prKey2);
+                Regedit.WriteKey(ReadConfigKey, "PrivateKey", clearText);
+            }
+            catch (Exception ex)
+            {
+
+                }
+            return false;
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            table = new DataTable();
-            table.Columns.Add("STT", typeof(int));
-            table.Columns.Add("Tên File", typeof(string));
-            table.Columns.Add("Thư mục", typeof(string));
-            table.Columns.Add("Kích thức", typeof(string));
-            listMachine = new List<ModelMachine>();
-            listMachine =Utils.listMachines(URL_PART_MACHINE_ID,comboBox1);
-       
-            this.dataGridView1.Controls.Add(HeaderCheckBox);
+          
+            if (CheckLicense())
+            {
+                btn_check_key.Visible = false;
+                table = new DataTable();
+                table.Columns.Add("STT", typeof(int));
+                table.Columns.Add("Tên File", typeof(string));
+                table.Columns.Add("Thư mục", typeof(string));
+                table.Columns.Add("Kích thức", typeof(string));
+                listMachine = new List<ModelMachine>();
+                listMachine = Utils.listMachines(URL_PART_MACHINE_ID, comboBox1);
 
-            dataGridView1.DataSource = table;
-            this.dataGridView1.Columns[2].Width = 400;
-            this.dataGridView1.Columns[3].Width = 400;
+                this.dataGridView1.Controls.Add(HeaderCheckBox);
 
-            AddHeaderCheckBox();
+                dataGridView1.DataSource = table;
+                this.dataGridView1.Columns[2].Width = 400;
+                this.dataGridView1.Columns[3].Width = 400;
 
-            HeaderCheckBox.MouseClick += new MouseEventHandler(HeaderCheckBox_MouseClick);
+                AddHeaderCheckBox();
+
+
+                HeaderCheckBox.MouseClick += new MouseEventHandler(HeaderCheckBox_MouseClick);
+
+            }
+            else
+            {
+                btn_machine_IP.Enabled = false;
+                comboBox1.Enabled = false;
+                bt_search.Enabled = false;
+                btn_copy.Enabled = false;
+                dataGridView1.Enabled = false;
+                txt_CardNumber.Enabled = false;
+                txt_TransNo.Enabled = false;
+                date_TransactionDate.Enabled = false;
+
+
+
+            }
         }
 
 
@@ -438,6 +496,18 @@ namespace FileManagement
             }
         }
 
+        private void btn_check_key_Click(object sender, EventArgs e)
+        {
+            keyPublic = ManagedAes.Encrypt(HardwareInfo.Info(), prKey1);
+            keyPublic = ManagedAes.Encrypt(keyPublic, prKey1);
+            Regedit.WriteKey(ReadConfigKey, "PublicKey", keyPublic);
+            FormCheckLicense f = new FormCheckLicense(this);
+            f.ShowDialog();
+        }
 
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

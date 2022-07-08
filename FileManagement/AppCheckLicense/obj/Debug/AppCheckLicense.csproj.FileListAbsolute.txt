@@ -1,0 +1,10 @@
+E:\ASP\Search-file-image\FileManagement\AppCheckLicense\bin\Debug\AppCheckLicense.exe.config
+E:\ASP\Search-file-image\FileManagement\AppCheckLicense\bin\Debug\AppCheckLicense.exe
+E:\ASP\Search-file-image\FileManagement\AppCheckLicense\bin\Debug\AppCheckLicense.pdb
+E:\ASP\Search-file-image\FileManagement\AppCheckLicense\obj\Debug\AppCheckLicense.Form1.resources
+E:\ASP\Search-file-image\FileManagement\AppCheckLicense\obj\Debug\AppCheckLicense.Properties.Resources.resources
+E:\ASP\Search-file-image\FileManagement\AppCheckLicense\obj\Debug\AppCheckLicense.csproj.GenerateResource.cache
+E:\ASP\Search-file-image\FileManagement\AppCheckLicense\obj\Debug\AppCheckLicense.csproj.CoreCompileInputs.cache
+E:\ASP\Search-file-image\FileManagement\AppCheckLicense\obj\Debug\AppCheckLicense.exe
+E:\ASP\Search-file-image\FileManagement\AppCheckLicense\obj\Debug\AppCheckLicense.pdb
+E:\ASP\Search-file-image\FileManagement\AppCheckLicense\obj\Debug\AppCheckLicense.csproj.AssemblyReference.cache

@@ -49,6 +49,7 @@ namespace FileManagement
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.chk = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_check_key = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -218,6 +219,7 @@ namespace FileManagement
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btn_check_key);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.btn_machine_IP);
             this.groupBox1.Controls.Add(this.lb_connect);
@@ -228,6 +230,18 @@ namespace FileManagement
             this.groupBox1.Size = new System.Drawing.Size(944, 44);
             this.groupBox1.TabIndex = 25;
             this.groupBox1.TabStop = false;
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // btn_check_key
+            // 
+            this.btn_check_key.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold);
+            this.btn_check_key.Location = new System.Drawing.Point(742, 12);
+            this.btn_check_key.Name = "btn_check_key";
+            this.btn_check_key.Size = new System.Drawing.Size(178, 28);
+            this.btn_check_key.TabIndex = 25;
+            this.btn_check_key.Text = "Check  License Key";
+            this.btn_check_key.UseVisualStyleBackColor = true;
+            this.btn_check_key.Click += new System.EventHandler(this.btn_check_key_Click);
             // 
             // groupBox2
             // 
@@ -320,6 +334,7 @@ namespace FileManagement
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Button btn_check_key;
     }
 }
 

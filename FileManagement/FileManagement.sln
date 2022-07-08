@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceSearch", "ServiceSea
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupServiceSearch", "SetupServiceSearch\SetupServiceSearch.vdproj", "{AB50708C-CE46-4887-B1E5-3A7B0082894B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchImage", "SearchImage\SearchImage.csproj", "{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchImage", "SearchImage\SearchImage.csproj", "{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppCheckLicense", "AppCheckLicense\AppCheckLicense.csproj", "{2DB651AB-4FBF-4302-9294-76C8C89681F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,14 @@ Global
 		{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}.Release|x86.ActiveCfg = Release|Any CPU
 		{0DB9E96E-0470-49B1-877D-BA10AB65DFDF}.Release|x86.Build.0 = Release|Any CPU
+		{2DB651AB-4FBF-4302-9294-76C8C89681F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DB651AB-4FBF-4302-9294-76C8C89681F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DB651AB-4FBF-4302-9294-76C8C89681F6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2DB651AB-4FBF-4302-9294-76C8C89681F6}.Debug|x86.Build.0 = Debug|Any CPU
+		{2DB651AB-4FBF-4302-9294-76C8C89681F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DB651AB-4FBF-4302-9294-76C8C89681F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DB651AB-4FBF-4302-9294-76C8C89681F6}.Release|x86.ActiveCfg = Release|Any CPU
+		{2DB651AB-4FBF-4302-9294-76C8C89681F6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

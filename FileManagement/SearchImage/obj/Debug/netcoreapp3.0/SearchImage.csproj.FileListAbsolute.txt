@@ -24,4 +24,3 @@ E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Debug\netcoreapp3.0\Sear
 E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Debug\netcoreapp3.0\SearchImage.pdb
 E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Debug\netcoreapp3.0\SearchImage.genruntimeconfig.cache
 E:\ASP\Search-file-image\FileManagement\SearchImage\bin\Debug\netcoreapp3.0\Microsoft.WindowsAPICodePack.dll
-E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Debug\netcoreapp3.0\SearchImage.csproj.CopyComplete

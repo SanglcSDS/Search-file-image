@@ -42,4 +42,4 @@ E:\ASP\Search-file-image\FileManagement\FileManagement\bin\Debug\Nancy.dll
 E:\ASP\Search-file-image\FileManagement\FileManagement\bin\Debug\Nancy.xml
 E:\ASP\Search-file-image\FileManagement\FileManagement\bin\Debug\Newtonsoft.Json.dll
 E:\ASP\Search-file-image\FileManagement\FileManagement\bin\Debug\Newtonsoft.Json.xml
-E:\ASP\Search-file-image\FileManagement\FileManagement\obj\Debug\FileManagement.csproj.CopyComplete
+E:\ASP\Search-file-image\FileManagement\FileManagement\obj\Debug\FileManagement.FormCheckLicense.resources
