@@ -20,7 +20,7 @@ E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Release\netcoreapp3.0\Se
 E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Release\netcoreapp3.0\SearchImage.AssemblyInfoInputs.cache
 E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Release\netcoreapp3.0\SearchImage.AssemblyInfo.cs
 E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Release\netcoreapp3.0\SearchImage.csproj.CoreCompileInputs.cache
-E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Release\netcoreapp3.0\SearchImage.csproj.CopyComplete
 E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Release\netcoreapp3.0\SearchImage.dll
 E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Release\netcoreapp3.0\SearchImage.pdb
 E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Release\netcoreapp3.0\SearchImage.genruntimeconfig.cache
+E:\ASP\Search-file-image\FileManagement\SearchImage\obj\Release\netcoreapp3.0\SearchImage.csproj.AssemblyReference.cache
